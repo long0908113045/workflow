@@ -23,5 +23,51 @@ dependencies {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+  useJUnitPlatform()
+}
+
+tasks.withType(Checkstyle) {
+  reports {
+    configDirectory.set(file("$rootDir/gradle/config/checkstyle"))
+  }
+}
+
+task buildFrontend(type: Exec) {
+  if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+    commandLine 'cmd', '/c', 'npm run-script build'
+  } else {
+    commandLine 'sh', '-c', 'npm run-script build'
+  }
+}
+
+task copyFileBuildFrontendToBuildJar(type: Exec) {
+  if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+    commandLine 'cmd', '/c', 'xcopy dist\\frontend build\\resources\\main\\static\\ /Y /E'
+  } else {
+    commandLine 'sh', '-c', 'mkdir -p build/resources/main/static  && cp -RT dist/frontend/ build/resources/main/static/'
+  }
+}
+copyFileBuildFrontendToBuildJar.dependsOn buildFrontend
+bootJar.dependsOn copyFileBuildFrontendToBuildJar
+build.dependsOn copyFileBuildFrontendToBuildJar
+
+
+def frontendFiles = project.fileTree(dir: "src/app", include: "**/*.ts")
+
+task checkStyleFrontend(type: Exec) {
+  inputs.files(frontendFiles)
+  if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+    commandLine 'cmd', '/c', 'npm run-script lint'
+  } else {
+    commandLine 'sh', '-c', 'npm run-script lint'
+  }
+}
+
+task checkTestFrontend(type: Exec) {
+  inputs.files(frontendFiles)
+  if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+    commandLine 'cmd', '/c', 'npm run-script test'
+  } else {
+    commandLine 'sh', '-c', 'npm run-script test'
+  }
 }
