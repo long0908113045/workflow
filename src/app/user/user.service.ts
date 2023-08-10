@@ -1,6 +1,5 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
 
 
 @Injectable()
@@ -9,7 +8,7 @@ export class UserService {
 
   private baseURL = 'api/'
 
-  public getAllUser(): Observable<any>{
+  public getAllUser(){
     return this.http.get(`${this.baseURL}user/all`)
   }
 }
