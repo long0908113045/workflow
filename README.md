@@ -1,5 +1,9 @@
 
 # Work Flow
+## Using Azure Pipeline to automation run:
++ Unit Test.
++ Build.
++ Deploy.
 
 To install Node Module :
 ```bash
