@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {Subject, takeUntil} from "rxjs";
+import {user} from "../user.model";
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   private destroyed$: Subject<boolean> = new Subject<boolean>();
 
-  users = [{ id:'', name: '', email: ''}];
+  users : [user] = [{ id:'', name: '', email: ''}];
 
   ngOnInit(): void {
     this.userService.getAllUser().pipe(takeUntil(this.destroyed$)).subscribe(res => {
