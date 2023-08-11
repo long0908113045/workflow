@@ -2,12 +2,10 @@ package learning.workflow.user.controller;
 
 import learning.workflow.user.model.User;
 import learning.workflow.user.repository.UserRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -23,13 +21,8 @@ public class UserControllerTests {
   @InjectMocks
   private UserController userController;
 
-  @Before
-  public void init() {
-    MockitoAnnotations.openMocks(this);
-  }
-
   @Test
-  public void getAllUsers() throws Exception {
+  public void getAllUsers() {
     List<User> users = new ArrayList<>();
     User user = new User();
     user.setName("user name");
