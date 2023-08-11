@@ -37,9 +37,14 @@ To run unit test Back End using gradle :
   gradle test
 ```
 
-To run check style Back End using gradle :
+To run check style Back End Main using gradle :
 ```bash
-  gradle Checkstyle
+  gradle CheckstyleMain
+```
+
+To run check style Back End Test using gradle :
+```bash
+  gradle CheckstyleTest
 ```
 
 To build project using gradle :
